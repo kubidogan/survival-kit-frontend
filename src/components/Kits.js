@@ -89,7 +89,7 @@ function Kits({ addMarkersToMap }) {
             kit.latitude,
             kit.longitude
           );
-          return kitDistance <= 10;
+          return kitDistance <= 300;
         });
 
         console.log("Nearby Survival Kits:", nearbyKits);
