@@ -39,7 +39,7 @@ function Kits() {
             kit.latitude,
             kit.longitude
           );
-          return kitDistance <= 10;
+          return kitDistance <= 350;
         });
 
         console.log("Nearby Survival Kits:", nearbyKits);
