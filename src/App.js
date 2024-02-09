@@ -464,6 +464,21 @@ export default function App() {
         })),
       });
     }
+
+    // Add a popup to each marker
+    survivalKits.forEach((kit) => {
+      const popup = new mapboxgl.Popup({
+        offset: 25,
+        closeButton: false,
+      }).setHTML(
+        `<h3>${kit.name}</h3><p>Location: ${kit.location}</p><p>Address: ${kit.address}</p>`
+      );
+
+      new mapboxgl.Marker({ color: "red" })
+        .setLngLat([kit.longitude, kit.latitude])
+        .setPopup(popup)
+        .addTo(map.current);
+    });
   };
 
   useEffect(() => {
