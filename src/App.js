@@ -272,17 +272,258 @@
 
 // export default App;
 
-import React from "react";
+// import React from "react";
+// import Kits from "./components/Kits";
+// import Header from "./components/Header";
+
+// function App() {
+//   return (
+//     <div>
+//       <Header />
+//       <Kits />
+//     </div>
+//   );
+// }
+
+// export default App;
+// import React, { useRef, useEffect, useState } from "react";
+// import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+// import Kits from "./components/Kits";
+// import Header from "./components/Header";
+
+// mapboxgl.accessToken =
+//   "pk.eyJ1Ijoia3ViaWRvZ2FuIiwiYSI6ImNsc2Y1bjZxcDE5N2Iyamw1MGlmZjdzcTUifQ.p87uDmOrQ2KUjSDMaVLoxw";
+
+// export default function App() {
+//   const mapContainer = useRef(null);
+//   const map = useRef(null);
+//   const [lng, setLng] = useState(-70.9);
+//   const [lat, setLat] = useState(42.35);
+//   const [zoom, setZoom] = useState(9);
+
+//   useEffect(() => {
+//     if (map.current) return; // initialize map only once
+//     map.current = new mapboxgl.Map({
+//       container: mapContainer.current,
+//       style: "mapbox://styles/mapbox/streets-v12",
+//       center: [lng, lat],
+//       zoom: zoom,
+//     });
+
+//     map.current.on("move", () => {
+//       setLng(map.current.getCenter().lng.toFixed(4));
+//       setLat(map.current.getCenter().lat.toFixed(4));
+//       setZoom(map.current.getZoom().toFixed(2));
+//     });
+//   }, []);
+
+//   return (
+//     <div>
+//       <Header />
+//       <div className="sidebar">
+//         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+//       </div>
+//       <div ref={mapContainer} className="map-container" />
+//       <Kits />
+//     </div>
+//   );
+// }
+
+/* eslint-disable-next-line import/no-webpack-loader-syntax */
+// import React, { useRef, useEffect, useState } from "react";
+// import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+// import Kits from "./components/Kits";
+// import Header from "./components/Header";
+
+// mapboxgl.accessToken =
+//   "pk.eyJ1Ijoia3ViaWRvZ2FuIiwiYSI6ImNsc2Y2bDF6ODB1djAya21oYjM0cjlsbW4ifQ.FhR8WBg6YiNwwloyBOqLUQ";
+
+// export default function App() {
+//   const mapContainer = useRef(null);
+//   const map = useRef(null);
+//   const [lng, setLng] = useState(-1.8907);
+//   const [lat, setLat] = useState(52.4958);
+//   const [zoom, setZoom] = useState(10);
+
+//   const addMarkersToMap = (coordinates) => {
+//     if (map.current) {
+//       // Clear existing markers
+//       map.current.getSource("markers").setData({
+//         type: "FeatureCollection",
+//         features: [],
+//       });
+
+//       // Add new markers
+//       map.current.getSource("markers").setData({
+//         type: "FeatureCollection",
+//         features: coordinates.map(([longitude, latitude]) => ({
+//           type: "Feature",
+//           geometry: {
+//             type: "Point",
+//             coordinates: [longitude, latitude],
+//           },
+//           properties: {},
+//         })),
+//       });
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (map.current) return; // initialize map only once
+//     map.current = new mapboxgl.Map({
+//       container: mapContainer.current,
+//       style: "mapbox://styles/mapbox/streets-v12",
+//       center: [lng, lat],
+//       zoom: zoom,
+//     });
+
+//     map.current.on("load", () => {
+//       // Add a source and layer for the markers
+//       map.current.addSource("markers", {
+//         type: "geojson",
+//         data: {
+//           type: "FeatureCollection",
+//           features: [],
+//         },
+//       });
+
+//       map.current.addLayer({
+//         id: "markers",
+//         type: "symbol",
+//         source: "markers",
+//         layout: {
+//           "icon-image": "custom-marker",
+//           "icon-allow-overlap": true,
+//         },
+//       });
+
+//       // Add a custom marker image
+//       map.current.loadImage("/marker.png", (error, image) => {
+//         if (error) throw error;
+//         if (map.current) {
+//           map.current.addImage("custom-marker", image);
+//         }
+//       });
+//     });
+
+//     map.current.on("move", () => {
+//       setLng(map.current.getCenter().lng.toFixed(4));
+//       setLat(map.current.getCenter().lat.toFixed(4));
+//       setZoom(map.current.getZoom().toFixed(2));
+//     });
+//   }, [lng, lat, zoom]);
+
+//   return (
+//     <div>
+//       <Header />
+//       <div className="sidebar">
+//         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+//       </div>
+//       <div ref={mapContainer} className="map-container" />
+//       <Kits addMarkersToMap={addMarkersToMap} />
+//     </div>
+//   );
+// }
+import React, { useRef, useEffect, useState } from "react";
+import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import Kits from "./components/Kits";
 import Header from "./components/Header";
 
-function App() {
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoia3ViaWRvZ2FuIiwiYSI6ImNsc2Y2bDF6ODB1djAya21oYjM0cjlsbW4ifQ.FhR8WBg6YiNwwloyBOqLUQ";
+
+export default function App() {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(-1.9506128); // Default to the longitude of the UK
+  const [lat, setLat] = useState(52.6173877); // Default to the latitude of the UK
+  const [zoom, setZoom] = useState(9);
+
+  const addMarkersToMap = (survivalKits) => {
+    if (map.current) {
+      // Clear existing markers
+      map.current.getSource("markers").setData({
+        type: "FeatureCollection",
+        features: [],
+      });
+
+      // Add new markers
+      map.current.getSource("markers").setData({
+        type: "FeatureCollection",
+        features: survivalKits.map((kit) => ({
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [kit.longitude, kit.latitude],
+          },
+          properties: {
+            name: kit.name,
+            location: kit.location,
+            address: kit.address,
+          },
+        })),
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+
+    map.current.on("load", () => {
+      // Add sources and layers when the map is loaded
+      map.current.addSource("markers", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: [],
+        },
+      });
+
+      map.current.on("move", () => {
+        setLng(map.current.getCenter().lng.toFixed(4));
+        setLat(map.current.getCenter().lat.toFixed(4));
+        setZoom(map.current.getZoom().toFixed(2));
+      });
+
+      // Add a custom marker image
+      map.current.loadImage(
+        "/marker.png", // Adjust the path to your marker image
+        (error, image) => {
+          if (error) throw error;
+          if (map.current) {
+            map.current.addImage("custom-marker", image);
+
+            // Add a layer for the markers after the image is loaded
+            map.current.addLayer({
+              id: "markers",
+              type: "symbol",
+              source: "markers",
+              layout: {
+                "icon-image": "custom-marker",
+                "icon-allow-overlap": true,
+              },
+            });
+          }
+        }
+      );
+    });
+  }, [lng, lat, zoom]);
+
   return (
     <div>
       <Header />
-      <Kits />
+      <div className="sidebar">
+        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+      </div>
+      <div ref={mapContainer} className="map-container" />
+      <Kits addMarkersToMap={addMarkersToMap} />
     </div>
   );
 }
-
-export default App;
