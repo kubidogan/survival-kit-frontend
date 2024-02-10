@@ -26,6 +26,11 @@ function Kits({ addMarkersToMap }) {
     return deg * (Math.PI / 180);
   };
 
+  const closeBanner = () => {
+    const banner = document.querySelector(".notification-banner");
+    banner.style.display = "none";
+  };
+
   // const fetchAllSurvivalKits = async () => {
   //   try {
   //     setLoading(true);
@@ -108,8 +113,28 @@ function Kits({ addMarkersToMap }) {
   }, []);
 
   return (
-    <div>
-      <h1>Survival Kit App</h1>
+    <div className="kit-container">
+      {/* <div className="notification-banner">
+        <div className="banner-name">
+          <h3>Important</h3>
+          <p>
+            Please call 999 first. Click the button below to find the nearest
+            stab survival kit. Then follow the instructions inside the kit.
+          </p>
+        </div>
+      </div> */}
+      <div class="notification-banner">
+        <span class="notification-banner-close" onClick={closeBanner}>
+          ×
+        </span>
+        <p>
+          <strong>Important</strong> <br></br>Please call 999 if this is an
+          emergency, survival kits may not always be available even if the app
+          shows they are.<br></br>
+          <a href="www.google.com">Learn more</a>
+        </p>
+      </div>
+      <span class="material-symbols-outlined ">medical_services</span>
 
       <button onClick={findNearbySurvivalKits} disabled={loading}>
         {loading
@@ -117,7 +142,7 @@ function Kits({ addMarkersToMap }) {
           : "Find Nearby Survival Kits"}
       </button>
 
-      <div>
+      {/* <div className="kits-all">
         <h2>All Survival Kits:</h2>
         {loading ? (
           <p>Loading...</p>
@@ -132,9 +157,9 @@ function Kits({ addMarkersToMap }) {
         ) : (
           <p>No survival kits found.</p>
         )}
-      </div>
+      </div> */}
 
-      <div>
+      <div className="kits-nearby">
         <h2>Nearby Survival Kits:</h2>
         {loading ? (
           <p>Searching for nearby survival kits...</p>
