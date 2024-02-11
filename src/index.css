@@ -181,6 +181,7 @@ code {
   }
 }
 
+/* List Items Styles */
 .kits-nearby {
   margin-top: 20px;
 }
@@ -206,4 +207,23 @@ code {
 .kits-nearby p {
   font-style: italic;
   color: #777;
+}
+
+/* Kit Modal */
+
+.kit-modal {
+  display: flex;
+
+  p {
+    padding: 10px;
+  }
+
+  button {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  h3 {
+    padding: 10px;
+  }
 }

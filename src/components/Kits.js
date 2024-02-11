@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"; // eslint-disable-line
 import axios from "axios";
+import KitModal from "./KitModal";
 
 function Kits({ addMarkersToMap }) {
   const [survivalKits, setSurvivalKits] = useState([]);
   const [loading, setLoading] = useState(false);
   const [nearbyKits, setNearbyKits] = useState([]);
+  const [selectedKit, setSelectedKit] = useState(null);
   const apiBaseUrl = "https://mysite-kmyj.onrender.com";
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -66,6 +68,8 @@ function Kits({ addMarkersToMap }) {
           address: kit.address,
           latitude: kit.latitude,
           longitude: kit.longitude,
+          content: kit.contents,
+          contact: kit.contact,
         }));
 
         setSurvivalKits(survivalKits);
@@ -77,6 +81,11 @@ function Kits({ addMarkersToMap }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Modal
+  const handleKitClick = (kit) => {
+    setSelectedKit(kit);
   };
 
   // In Kits.js
@@ -123,8 +132,8 @@ function Kits({ addMarkersToMap }) {
           </p>
         </div>
       </div> */}
-      <div class="notification-banner">
-        <span class="notification-banner-close" onClick={closeBanner}>
+      <div className="notification-banner">
+        <span className="notification-banner-close" onClick={closeBanner}>
           ×
         </span>
         <p>
@@ -175,8 +184,14 @@ function Kits({ addMarkersToMap }) {
           <p>Searching for nearby survival kits...</p>
         ) : nearbyKits.length > 0 ? (
           <ul>
+            {selectedKit && (
+              <KitModal
+                kit={selectedKit}
+                onClose={() => setSelectedKit(null)}
+              />
+            )}
             {nearbyKits.map((kit) => (
-              <li key={kit.id}>
+              <li key={kit.id} onClick={() => handleKitClick(kit)}>
                 {kit.name} - Location: {kit.location} - {kit.address}
               </li>
             ))}
