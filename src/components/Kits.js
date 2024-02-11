@@ -134,13 +134,23 @@ function Kits({ addMarkersToMap }) {
           <a href="www.google.com">Learn more</a>
         </p>
       </div>
-      <span class="material-symbols-outlined ">medical_services</span>
+      <span
+        className="material-symbols-outlined nearby-button"
+        onClick={findNearbySurvivalKits}
+        disabled={
+          loading
+            ? "Finding Nearby Survival Kits..."
+            : "Find Nearby Survival Kits"
+        }
+      >
+        medical_services
+      </span>
 
-      <button onClick={findNearbySurvivalKits} disabled={loading}>
+      {/* <button onClick={findNearbySurvivalKits} disabled={loading}>
         {loading
           ? "Finding Nearby Survival Kits..."
           : "Find Nearby Survival Kits"}
-      </button>
+      </button> */}
 
       {/* <div className="kits-all">
         <h2>All Survival Kits:</h2>
@@ -160,14 +170,14 @@ function Kits({ addMarkersToMap }) {
       </div> */}
 
       <div className="kits-nearby">
-        <h2>Nearby Survival Kits:</h2>
+        <h2>Kits Near You:</h2>
         {loading ? (
           <p>Searching for nearby survival kits...</p>
         ) : nearbyKits.length > 0 ? (
           <ul>
             {nearbyKits.map((kit) => (
               <li key={kit.id}>
-                {kit.name} - Location: {kit.location} - Address: {kit.address}
+                {kit.name} - Location: {kit.location} - {kit.address}
               </li>
             ))}
           </ul>
